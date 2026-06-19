@@ -5,7 +5,7 @@
  * Helpers to make life easier in the other scripts
  *
  *
- * @module api/forms
+ * @module api/workspace/[id]/forms
  * @author BuddyWinte
  * @since 2.1.10-beta20
  */
