@@ -77,6 +77,7 @@ const workspacestate = stableAtom({
 			resignationsEnabled: false,
 			leaderboardEnabled: false,
 			policiesEnabled: false,
+      formsEnabled: false,
 			widgets: [] as string[],
 			allianceMaxStrikes: ALLIANCE_STRIKES_DEFAULT_MAX,
 		}

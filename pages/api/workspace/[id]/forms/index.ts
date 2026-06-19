@@ -6,9 +6,11 @@
  * Used for listing existing forms and creating new forms.
  *
  * Routes:
- * GET  /api/forms/:formId
- * PATCH /api/forms/:formId
- * DELETE /api/forms/:formId
+ * GET  /api/workspace/:workspaceId/forms
+ * POST /api/workspace/:workspaceId/forms
+ * GET  /api/workspace/:workspaceId/forms/:formId
+ * PATCH /api/workspace/:workspaceId/forms/:formId
+ * DELETE /api/workspace/:workspaceId/forms/:formId
  *
  * Permissions:
  * - Forms.View
@@ -18,3 +20,5 @@
  * @author BuddyWinte
  * @since 2.1.10-beta20
  */
+
+import { withAuth } from "@/lib/withAuth";

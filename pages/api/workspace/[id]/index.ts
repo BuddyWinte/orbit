@@ -34,7 +34,8 @@ type Data = {
 			alliesEnabled: boolean
 			noticesEnabled: boolean
 			resignationsEnabled: boolean
-			policiesEnabled: boolean
+			policiesEnabled: boolean,
+      formsEnabled: boolean,
 			widgets: string[]
 			allianceMaxStrikes: number
 		}
@@ -91,6 +92,7 @@ export async function handler(
 		sessionsConfig,
 		alliesConfig,
 		noticesConfig,
+    formsConfig,
 		resignationsConfig,
 		policiesConfig,
 		homeConfig,
@@ -103,6 +105,7 @@ export async function handler(
 		getConfig('sessions', workspace.groupId),
 		getConfig('allies', workspace.groupId),
 		getConfig('notices', workspace.groupId),
+    getConfig('forms', workspace.groupId),
 		getConfig('resignations', workspace.groupId),
 		getConfig('policies', workspace.groupId),
 		getConfig('home', workspace.groupId),
@@ -205,6 +208,7 @@ export async function handler(
 			noticesEnabled: noticesConfig?.enabled || false,
 			resignationsEnabled: resignationsConfig?.enabled || false,
 			policiesEnabled: policiesConfig?.enabled || false,
+      formsEnabled: formsConfig?.enabled || false,
 			widgets: homeConfig?.widgets || [],
 			allianceMaxStrikes: normalizeAllianceMaxStrikes(
 				allianceStrikesConfig?.maxStrikes ?? ALLIANCE_STRIKES_DEFAULT_MAX,

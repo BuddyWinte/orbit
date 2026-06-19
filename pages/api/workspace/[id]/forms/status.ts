@@ -50,7 +50,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ApiResponse>)  
     if (req.method == "GET") {
       const config = await prisma.config.findFirst({
         where: {
-          key: "forms.enabled",
+          key: "forms",
           workspaceGroupId,
         },
       });
@@ -74,7 +74,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ApiResponse>)  
 
       const existing = await prisma.config.findFirst({
         where: {
-          key: "forms.enabled",
+          key: "forms",
           workspaceGroupId,
         },
       });
@@ -86,7 +86,7 @@ async function handler(req: NextApiRequest, res: NextApiResponse<ApiResponse>)  
         data: { value: dValue },
       }) : await prisma.config.create({
         data: {
-          key: "forms.enabled",
+          key: "forms",
           workspaceGroupId,
           value: dValue,
         },

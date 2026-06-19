@@ -36,6 +36,7 @@ import {
   IconDots,
   IconGridDots,
   IconUserCircle,
+  IconForms,
 } from "@tabler/icons-react";
 import axios from "axios";
 import clsx from "clsx";
@@ -205,6 +206,7 @@ const Sidebar: NextPage<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
   const [sessionsEnabled, setSessionsEnabled] = useState(false);
   const [noticesEnabled, setNoticesEnabled] = useState(false);
   const [resignationsEnabled, setResignationsEnabled] = useState(false);
+  const [formsEnabled, setFormsEnabled] = useState(false);
   const [policiesEnabled, setPoliciesEnabled] = useState(false);
   const [pendingPolicyCount, setPendingPolicyCount] = useState(0);
   const [pendingNoticesCount, setPendingNoticesCount] = useState(0);
@@ -299,6 +301,7 @@ const Sidebar: NextPage<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
       { name: "Staff", href: `/workspace/${workspace.groupId}/views`, icon: IconUser, filledIcon: IconUserFilled, accessible: workspace.yourPermission.includes("view_members") },
       ...(docsEnabled ? [{ name: "Docs", href: `/workspace/${workspace.groupId}/docs`, icon: IconFileText, filledIcon: IconFileTextFilled, accessible: true }] : []),
       ...(policiesEnabled ? [{ name: "Policies", href: `/workspace/${workspace.groupId}/policies`, icon: IconShield, filledIcon: IconShieldFilled, accessible: true }] : []),
+      ...(formsEnabled ? [{ name: "Forms", href: `/workspace/${workspace.groupId}/forms`, icon: IconForms, filledIcon: IconForms, accessible: true }] : []),
       { name: "Settings", href: `/workspace/${workspace.groupId}/settings`, icon: IconSettings, filledIcon: IconSettingsFilled, accessible: ["admin", "workspace_customisation", "reset_activity", "manage_features", "manage_apikeys", "view_audit_logs"].some((perm) => workspace.yourPermission.includes(perm)) },
       { name: "My Profile", href: `/workspace/${workspace.groupId}/profile/${login.userId}`, icon: IconUser, accessible: true },
     ];
@@ -342,6 +345,7 @@ const Sidebar: NextPage<SidebarProps> = ({ isCollapsed, setIsCollapsed }) => {
         setNoticesEnabled(data.value?.notices?.enabled ?? false);
         setResignationsEnabled(data.value?.resignations?.enabled ?? false);
         setPoliciesEnabled(data.value?.policies?.enabled ?? false);
+        setFormsEnabled(data.value?.forms?.enabled ?? false);
       })
       .catch(() => setDocsEnabled(false));
   }, [workspace.groupId]);
