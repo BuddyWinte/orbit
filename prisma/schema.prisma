@@ -48,6 +48,8 @@ model config {
   updatedAt        DateTime  @updatedAt
   workspaceGroupId Int
   workspace        workspace @relation(fields: [workspaceGroupId], references: [groupId])
+
+  @@unique([key, workspaceGroupId])
 }
 
 model instanceConfig {
@@ -102,6 +104,8 @@ model user {
   quotaCompletionsReviewed QuotaCustomCompletion[] @relation("QuotaCompletionReviewer")
   quotaUsers               QuotaUser[]
   forms                    form[]
+  formReviews              formReview[]
+  formComments             formComment[]
 }
 
 model AuthSession {
@@ -771,7 +775,7 @@ model formQuestion {
   settings        Json?
   visibilityRules Json?
   createdAt       DateTime     @default(now())
-  updatedat       DateTime     @updatedAt
+  updatedAt       DateTime     @updatedAt
   form            form         @relation(fields: [formId], references: [id], onDelete: Cascade)
   answers         formAnswer[]
 
@@ -779,24 +783,21 @@ model formQuestion {
 }
 
 model formSubmission {
-  id               String         @id @default(uuid()) @db.Uuid
-  formId           String         @db.Uuid
-  workspaceGroupId Int
-  userId           BigInt?
-  robloxUserId     BigInt?
-  discordUserId    String?
-  status           String         @default("SUBMITTED")
-  metadata         Json?
-  submittedAt      DateTime       @default(now())
-  updatedAt        DateTime       @updatedAt
-  form             form           @relation(fields: [formId], references: [id], onDelete: Cascade)
-  answers          formAnswer[]
-  reviews          formReview[]
-  comments         formComment[]
-  auditLogs        formAuditLog[]
+  id           String         @id @default(uuid()) @db.Uuid
+  formId       String         @db.Uuid
+  userId       BigInt?
+  robloxUserId BigInt?
+  status       String         @default("SUBMITTED")
+  metadata     Json?
+  submittedAt  DateTime       @default(now())
+  updatedAt    DateTime       @updatedAt
+  form         form           @relation(fields: [formId], references: [id], onDelete: Cascade)
+  answers      formAnswer[]
+  reviews      formReview[]
+  comments     formComment[]
+  auditLogs    formAuditLog[]
 
   @@index([formId])
-  @@index([workspaceGroupId])
   @@index([status])
 }
 
@@ -817,6 +818,7 @@ model formReview {
   id           String         @id @default(uuid()) @db.Uuid
   submissionId String         @db.Uuid
   reviewerId   BigInt
+  reviewer     user           @relation(fields: [reviewerId], references: [userid], onDelete: Cascade)
   vote         String?
   score        Int?
   notes        String?
@@ -832,6 +834,7 @@ model formComment {
   id           String         @id @default(uuid()) @db.Uuid
   submissionId String         @db.Uuid
   authorId     BigInt
+  author       user           @relation(fields: [authorId], references: [userid], onDelete: Cascade)
   content      String
   internal     Boolean        @default(false)
   createdAt    DateTime       @default(now())

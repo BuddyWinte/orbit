@@ -3,7 +3,7 @@ import Guide from './guides'
 import Alliances from './allies'
 import Activity from './activity'
 import home from './home'
-import Forms from './form';
+import Forms from './forms';
 import Sessions from './sessions'
 import Leaderboard from './leaderboard'
 import Notices from './notices'
